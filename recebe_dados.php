@@ -1,9 +1,14 @@
+<!DOCTYPE html>
+<html>
+<body>
+<pre>
+
 	<?php
 	
 			include 'conecta_mysql.inc';
 			$op_1 = $_POST["operacao"];
 			
-			//cadastra produto no banco de dados 			
+					
 			if($op_1 == "cadastrar")
 			{
 				$nome = $_POST["nome"];
@@ -17,8 +22,8 @@
 				}else{
 					echo "erro";
 				}
+				header("Location: menu.inc");
 			}	
-			//exclui produto dobanco de dados
 			else if($op_1 == "excluir")
 			{
 				$nome = $_POST["nome_ex"];
@@ -27,23 +32,32 @@
 				if($conect->query($sql))
 					{echo "produto excluido";}
 				else {echo "ERRO";}
+			header("Location: menu.inc");
 			}
-			//visualiza os produtos do banco
 			else if ($op_1 == "visualizar")
 			{
 				$nome = $_POST["nome_find"];
 				$sql = "SELECT * FROM produto";
-				$resultado = mysqli_query($sql);
+				$resultado = mysqli_query($conect,$sql);
 				
 				if ($resultado) {
 				    
 				    while($row = mysqli_fetch_assoc($resultado)) {
-				        echo "Name: " . $row["nome"]. " " . $row["codigo"]. " Preco: ".$row["preco"]. "<br>";
+				        echo "Name: " . $row["nome"]. " codigo: " . $row["codigo"]. " Preco: ".$row["preco"]. "<br>";
+
 					 }
 				} else {
-				    echo "0 results";
+				    echo "erro";
+				    header("Location: menu.inc");
 				}
+			
 			}	
 
 
 ?>
+		
+</pre>
+</body>
+</html>
+
+
